@@ -7,20 +7,20 @@ const questions = [
             "PARIS",  
             "ROME"  
         ],  
-        answer: 0  
+        answer: 2  
     },  
     {  
-        question: "Which of the followinhg KNown as red planet ?",  
+        question: "Which of the following is known as the Red Planet?",  
         options: [  
             "MARS",  
             "Earth",  
             "Venus",  
             "JUPiter"  
         ],  
-        answer: 2  
+        answer: 0  
     },  
     {  
-        question: "LARgest ocean In Earth??",  
+        question: "Largest ocean on Earth?",  
         options: [  
             "Atlantic",  
             "Pacific",  
@@ -28,7 +28,7 @@ const questions = [
             "ARTIC"  
         ],  
         answer: 1  
-    },  
+    }  
 ];  
 
 let currentQuestionIndex = 0;  
@@ -37,6 +37,7 @@ let score = 0;
 const questionText = document.getElementById("question-text");  
 const optionsContainer = document.getElementById("options-container");  
 const nextButton = document.getElementById("next-button");  
+const prevButton = document.getElementById("prev-button");  
 const submitButton = document.getElementById("submit-button");  
 const scoreContainer = document.getElementById("score-container");  
 const finalScore = document.getElementById("final-score");  
@@ -53,6 +54,11 @@ function loadQuestion() {
         `;  
         optionsContainer.appendChild(label);  
     });  
+    
+    
+    prevButton.style.display = currentQuestionIndex > 0 ? "inline-block" : "none";  
+    nextButton.style.display = currentQuestionIndex < questions.length - 1 ? "inline-block" : "none";  
+    submitButton.style.display = currentQuestionIndex === questions.length - 1 ? "inline-block" : "none";  
 }  
 
 function handleNextButton() {  
@@ -72,22 +78,31 @@ function handleNextButton() {
     }  
 }  
 
+function handlePrevButton() {  
+    if (currentQuestionIndex > 0) {  
+        currentQuestionIndex--;  
+        loadQuestion();  
+    }  
+}  
+
 function displayScore() {  
     questionText.style.display = "none";  
     optionsContainer.style.display = "none";  
     nextButton.style.display = "none";  
-    submitButton.style.display = "block";  
+    prevButton.style.display = "none";  
+    submitButton.style.display = "none";  
     scoreContainer.style.display = "block";  
     finalScore.textContent = `${score} / ${questions.length}`;  
 }  
 
 function handleSubmit() {  
     alert("Thanks for taking the quiz!");  
-    location.reload(); // Reload the page for a new attempt  
+    location.reload();  
 }  
 
 nextButton.addEventListener("click", handleNextButton);  
+prevButton.addEventListener("click", handlePrevButton);  
 submitButton.addEventListener("click", handleSubmit);  
 
-// Load the first question  
+
 loadQuestion();
